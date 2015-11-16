@@ -71,8 +71,8 @@ public class DepthFirstSearch {
         char[] start = {' ', ' ', ' ', ' ',
                         ' ', ' ', ' ', ' ',
                         ' ', ' ', ' ', ' ',
-                        'a', 'b', 'c', 'X'};
-        State startState = new State(start, 15);
+                        'a', 'b', 'X', 'c'};
+        State startState = new State(start, 14);
         Node root = new Node(startState,true);
         DepthFirstSearch dfs = new DepthFirstSearch();
         dfs.expandedUnvistedNodes.push(root);
