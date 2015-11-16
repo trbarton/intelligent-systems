@@ -97,4 +97,18 @@ public class State {
         rightState[agentIndex+1] = 'X';
         return new State(rightState,agentIndex+1,leftBoundary,rightBoundary);
     }
+
+    public State generateUpState(){
+        char[] upState = puzzleArray.clone();
+        upState[agentIndex] = upState[agentIndex-puzzleSize];
+        upState[agentIndex-puzzleSize] = 'X';
+        return new State(upState,agentIndex-puzzleSize,leftBoundary,rightBoundary);
+    }
+
+    public State generateDownState(){
+        char[] downState = puzzleArray.clone();
+        downState[agentIndex] = downState[agentIndex+puzzleSize];
+        downState[agentIndex+puzzleSize] = 'X';
+        return new State(downState,agentIndex+puzzleSize,leftBoundary,rightBoundary);
+    }
 }
