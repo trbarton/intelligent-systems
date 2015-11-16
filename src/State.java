@@ -83,4 +83,18 @@ public class State {
     public boolean isAtBottomBoundary() {
         return atBottomBoundary;
     }
+
+    public State generateLeftState(){
+        char[] leftState = puzzleArray.clone();
+        leftState[agentIndex] = leftState[agentIndex-1];
+        leftState[agentIndex-1] = 'X';
+        return new State(leftState,agentIndex-1,leftBoundary,rightBoundary);
+    }
+
+    public State generateRightState(){
+        char[] rightState = puzzleArray.clone();
+        rightState[agentIndex] = rightState[agentIndex+1];
+        rightState[agentIndex+1] = 'X';
+        return new State(rightState,agentIndex+1,leftBoundary,rightBoundary);
+    }
 }

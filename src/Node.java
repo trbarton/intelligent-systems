@@ -11,10 +11,10 @@ public class Node {
     private boolean isRoot = false;
 
 
-    public Node(Node parent, State state, int depth){
+    public Node(Node parent, State state){
         this.parent = parent;
         puzzleState = state;
-        this.depth = depth;
+        this.depth = parent.getDepth()+1;
     }
 
     public Node(State state, boolean root){
