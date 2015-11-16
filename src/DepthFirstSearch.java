@@ -33,11 +33,15 @@ public class DepthFirstSearch {
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goalState.getPuzzleArray())){
                 //Trace route back to root node
                 return;
-            }else if (currentNode.getDepth() < maxDepth){
-                currentNode.expandNode();
+            }else{
+                expandNode(currentNode);
                 visitedNodes.add(currentNode);
             }
         }
+    }
+
+    public void expandNode(Node input){
+        State inputState = input.getPuzzleState();
     }
 
 

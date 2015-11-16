@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * Created by Tom on 15/11/2015.
  */
@@ -7,6 +9,7 @@ public class Node {
     private State puzzleState;
     private int depth;
     private boolean isRoot = false;
+
 
     public Node(Node parent, State state, int depth){
         this.parent = parent;
@@ -32,7 +35,5 @@ public class Node {
         return depth;
     }
 
-    public void expandNode(){
 
-    }
 }
