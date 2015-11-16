@@ -9,18 +9,21 @@ public class Node {
     private State puzzleState;
     private int depth;
     private boolean isRoot = false;
+    private char lastMove = ' ';
 
 
-    public Node(Node parent, State state){
+    public Node(Node parent, State state, char createdByMove){
         this.parent = parent;
         puzzleState = state;
         this.depth = parent.getDepth()+1;
+        lastMove = createdByMove;
     }
 
     public Node(State state, boolean root){
         puzzleState = state;
         this.depth = 0;
         isRoot = root;
+        parent = this;
     }
 
     public Node(State state){
@@ -35,5 +38,11 @@ public class Node {
         return depth;
     }
 
+    public Node getParent() {
+        return parent;
+    }
 
+    public char getLastMove() {
+        return lastMove;
+    }
 }

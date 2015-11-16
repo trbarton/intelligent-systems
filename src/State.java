@@ -111,4 +111,14 @@ public class State {
         downState[agentIndex+puzzleSize] = 'X';
         return new State(downState,agentIndex+puzzleSize,leftBoundary,rightBoundary);
     }
+
+    public void printState(){
+        for(int i=0; i<puzzleArray.length; i++){
+            if(i % 4 == 0){
+                System.out.print("\n");
+            }
+            System.out.print("'" + puzzleArray[i] + "'" + " ");
+
+        }
+    }
 }
