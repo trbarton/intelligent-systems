@@ -13,13 +13,12 @@ public class DepthFirstSearch {
 
 
     private int nodesVisited = 0;
-    private int nodesExpanded = 0;
+    private int nodesInTree = 0;
 
     private  char[] goal = {' ', 'a', ' ', ' ',
                             ' ', 'b', ' ', ' ',
                             ' ', 'c', ' ', ' ',
                             ' ', 'X', ' ', ' '};
-    private Node rootNode;
     private Node currentNode;
 
     private Stack<Node> expandedUnvistedNodes = new Stack<>();
@@ -51,7 +50,7 @@ public class DepthFirstSearch {
                 expandNode(currentNode);
                 //visitedNodes.add(currentNode);
             }
-            System.out.println("Nodes Visited: " + nodesVisited + " Nodes Expanded: " + nodesExpanded);
+            System.out.println("Nodes Visited: " + nodesVisited + " Nodes In Tree: " + nodesInTree);
         }
     }
 
@@ -62,25 +61,25 @@ public class DepthFirstSearch {
             State left = inputState.generateLeftState();
             Node leftNode = new Node(input,left, 'L');
             newNodes.add(leftNode);
-            nodesExpanded++;
+            nodesInTree++;
         }
         if (!inputState.isAtRightBoundary() && input.getLastMove() != 'L'){
             State right = inputState.generateRightState();
             Node rightNode = new Node(input, right, 'R');
             newNodes.add(rightNode);
-            nodesExpanded++;
+            nodesInTree++;
         }
         if (!inputState.isAtTopBoundary() && input.getLastMove() != 'D'){
             State up = inputState.generateUpState();
             Node upNode = new Node(input, up, 'U');
             newNodes.add(upNode);
-            nodesExpanded++;
+            nodesInTree++;
         }
         if (!inputState.isAtBottomBoundary() && input.getLastMove() != 'U'){
             State down = inputState.generateDownState();
             Node downNode = new Node(input, down, 'D');
             newNodes.add(downNode);
-            nodesExpanded++;
+            nodesInTree++;
         }
         Collections.shuffle(newNodes);
         for (Node current: newNodes) {
