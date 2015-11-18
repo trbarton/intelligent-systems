@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 /**
  * Created by Tom on 15/11/2015.
  */
@@ -8,9 +6,14 @@ public class Node {
     private Node parent;
     private State puzzleState;
     private int depth;
-    private boolean isRoot = false;
+    private boolean root = false;
     private char lastMove = ' ';
 
+    public Node(State state, char createdByMove, int depth){
+        puzzleState = state;
+        this.depth = depth;
+        lastMove = createdByMove;
+    }
 
     public Node(Node parent, State state, char createdByMove){
         this.parent = parent;
@@ -22,7 +25,7 @@ public class Node {
     public Node(State state, boolean root){
         puzzleState = state;
         this.depth = 0;
-        isRoot = root;
+        this.root = root;
         parent = this;
     }
 
@@ -44,5 +47,9 @@ public class Node {
 
     public char getLastMove() {
         return lastMove;
+    }
+
+    public boolean isRoot(){
+        return root;
     }
 }

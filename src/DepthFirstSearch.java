@@ -8,10 +8,6 @@ import java.util.Stack;
  */
 public class DepthFirstSearch {
 
-    private int maxDepth;
-    private int maxNodesExpanded;
-
-
     private int nodesVisited = 0;
     private int nodesInTree = 0;
 
@@ -22,18 +18,9 @@ public class DepthFirstSearch {
     private Node currentNode;
 
     private Stack<Node> expandedUnvistedNodes = new Stack<>();
-    private ArrayList<Node> visitedNodes = new ArrayList<>();
 
-    private ArrayList<Node> solution;
+    private ArrayList<Node> solution = new ArrayList<>();
 
-    public  DepthFirstSearch(int maxDepth, int maxNodes, int puzzleSize){
-        this.maxDepth = maxDepth;
-        this.maxNodesExpanded = maxNodes;
-    }
-
-    public DepthFirstSearch(){
-
-    }
 
     private void clearStack() {
         expandedUnvistedNodes.clear();
@@ -45,13 +32,27 @@ public class DepthFirstSearch {
             nodesVisited++;
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
                 currentNode.getPuzzleState().printState();
+                printSolution(currentNode);
                 return;
             }else{
                 expandNode(currentNode);
-                //visitedNodes.add(currentNode);
             }
-            System.out.println("Nodes Visited: " + nodesVisited + " Nodes In Tree: " + nodesInTree);
+            //System.out.println("Nodes Visited: " + nodesVisited + " Nodes In Tree: " + nodesInTree);
         }
+    }
+
+    public void printSolution(Node goalNode){
+        Node current = goalNode;
+        while(!current.getParent().isRoot()){
+            solution.add(current);
+            current = current.getParent();
+        }
+        Collections.reverse(solution);
+        for(Node n : solution){
+            n.getPuzzleState().printState();
+            System.out.println("\n");
+        }
+        System.out.println("Nodes Visited: " + nodesVisited);
     }
 
     public void expandNode(Node input){
@@ -91,8 +92,8 @@ public class DepthFirstSearch {
         char[] start = {' ', ' ', ' ', ' ',
                         ' ', ' ', ' ', ' ',
                         ' ', ' ', ' ', ' ',
-                        'a', 'b', 'X', 'c'};
-        State startState = new State(start, 14);
+                        'a', 'b', 'c', 'X'};
+        State startState = new State(start, 15);
         Node root = new Node(startState,true);
         DepthFirstSearch dfs = new DepthFirstSearch();
         dfs.clearStack();
