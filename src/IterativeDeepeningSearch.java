@@ -20,9 +20,9 @@ public class IterativeDeepeningSearch {
     private boolean solutionFound = false;
 
     private  char[] goal = {' ', ' ', ' ', ' ',
-            ' ', 'a', ' ', ' ',
-            ' ', 'b', ' ', ' ',
-            ' ', 'c', ' ', 'X'};
+                            ' ', 'a', ' ', ' ',
+                            ' ', 'b', ' ', ' ',
+                            ' ', 'c', ' ', 'X'};
 
     private Node currentNode;
 
@@ -80,24 +80,24 @@ public class IterativeDeepeningSearch {
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
-        if (!inputState.isAtLeftBoundary() && input.getLastMove() != 'R'){
+        if (!inputState.isAtLeftBoundary()){
             State left = inputState.generateLeftState();
-            Node leftNode = new Node(input,left, 'L');
+            Node leftNode = new Node(input,left);
             newNodes.add(leftNode);
         }
-        if (!inputState.isAtRightBoundary() && input.getLastMove() != 'L'){
+        if (!inputState.isAtRightBoundary()){
             State right = inputState.generateRightState();
-            Node rightNode = new Node(input, right, 'R');
+            Node rightNode = new Node(input, right);
             newNodes.add(rightNode);
         }
-        if (!inputState.isAtTopBoundary() && input.getLastMove() != 'D'){
+        if (!inputState.isAtTopBoundary()){
             State up = inputState.generateUpState();
-            Node upNode = new Node(input, up, 'U');
+            Node upNode = new Node(input, up);
             newNodes.add(upNode);
         }
-        if (!inputState.isAtBottomBoundary() && input.getLastMove() != 'U'){
+        if (!inputState.isAtBottomBoundary()){
             State down = inputState.generateDownState();
-            Node downNode = new Node(input, down, 'D');
+            Node downNode = new Node(input, down);
             newNodes.add(downNode);
         }
         for (Node current: newNodes) {

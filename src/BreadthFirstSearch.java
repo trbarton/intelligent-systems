@@ -5,20 +5,20 @@ import java.util.*;
  */
 public class BreadthFirstSearch {
 
-    private int expandedNodes;
+    private int expandedNodes = 0;
 
     private Node currentNode;
 
     private  char[] goal = {' ', ' ', ' ', ' ',
-            ' ', 'a', ' ', ' ',
-            ' ', 'b', ' ', ' ',
-            ' ', 'c', ' ', 'X'};
+                            ' ', 'a', ' ', ' ',
+                            ' ', 'b', ' ', ' ',
+                            ' ', 'c', ' ', 'X'};
 
     private LinkedList<Node> nodeQueue = new LinkedList<>();
 
     public void search(){
         while(true){
-            currentNode = nodeQueue.remove();
+            currentNode = nodeQueue.poll();
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
                 currentNode.getPuzzleState().printState();
                 System.out.println("Depth: " + currentNode.getDepth() + " Nodes Expanded: " + expandedNodes);
@@ -37,24 +37,24 @@ public class BreadthFirstSearch {
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
         int depthIncrementer = input.getDepth() + 1;
-        if (!inputState.isAtLeftBoundary() && input.getLastMove() != 'R'){
+        if (!inputState.isAtLeftBoundary()){
             State left = inputState.generateLeftState();
-            Node leftNode = new Node(left, 'L', depthIncrementer);
+            Node leftNode = new Node(left, depthIncrementer);
             newNodes.add(leftNode);
         }
-        if (!inputState.isAtRightBoundary() && input.getLastMove() != 'L'){
+        if (!inputState.isAtRightBoundary()){
             State right = inputState.generateRightState();
-            Node rightNode = new Node(right, 'R', depthIncrementer);
+            Node rightNode = new Node(right, depthIncrementer);
             newNodes.add(rightNode);
         }
-        if (!inputState.isAtTopBoundary() && input.getLastMove() != 'D'){
+        if (!inputState.isAtTopBoundary()){
             State up = inputState.generateUpState();
-            Node upNode = new Node(up, 'U', depthIncrementer);
+            Node upNode = new Node(up, depthIncrementer);
             newNodes.add(upNode);
         }
-        if (!inputState.isAtBottomBoundary() && input.getLastMove() != 'U'){
+        if (!inputState.isAtBottomBoundary()){
             State down = inputState.generateDownState();
-            Node downNode = new Node(down, 'D', depthIncrementer);
+            Node downNode = new Node(down, depthIncrementer);
             newNodes.add(downNode);
         }
         for (Node current: newNodes) {

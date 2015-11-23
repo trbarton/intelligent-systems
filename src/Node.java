@@ -1,25 +1,24 @@
 /**
  * Created by Tom on 15/11/2015.
  */
-public class Node {
+public class Node implements Comparable<Node>{
 
     private Node parent;
     private State puzzleState;
     private int depth;
     private boolean root = false;
-    private char lastMove = ' ';
 
-    public Node(State state, char createdByMove, int depth){
+    private int weight;
+
+    public Node(State state, int depth){
         puzzleState = state;
         this.depth = depth;
-        lastMove = createdByMove;
     }
 
-    public Node(Node parent, State state, char createdByMove){
+    public Node(Node parent, State state){
         this.parent = parent;
         puzzleState = state;
         this.depth = parent.getDepth()+1;
-        lastMove = createdByMove;
     }
 
     public Node(State state, boolean root){
@@ -45,11 +44,20 @@ public class Node {
         return parent;
     }
 
-    public char getLastMove() {
-        return lastMove;
-    }
-
     public boolean isRoot(){
         return root;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+       return this.weight - o.getWeight();
     }
 }

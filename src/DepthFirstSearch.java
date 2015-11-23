@@ -63,27 +63,27 @@ public class DepthFirstSearch {
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
-        if (!inputState.isAtLeftBoundary() && input.getLastMove() != 'R'){
+        if (!inputState.isAtLeftBoundary()){
             State left = inputState.generateLeftState();
-            Node leftNode = new Node(input,left, 'L');
+            Node leftNode = new Node(input,left);
             newNodes.add(leftNode);
             nodesInTree++;
         }
-        if (!inputState.isAtRightBoundary() && input.getLastMove() != 'L'){
+        if (!inputState.isAtRightBoundary()){
             State right = inputState.generateRightState();
-            Node rightNode = new Node(input, right, 'R');
+            Node rightNode = new Node(input, right);
             newNodes.add(rightNode);
             nodesInTree++;
         }
-        if (!inputState.isAtTopBoundary() && input.getLastMove() != 'D'){
+        if (!inputState.isAtTopBoundary()){
             State up = inputState.generateUpState();
-            Node upNode = new Node(input, up, 'U');
+            Node upNode = new Node(input, up);
             newNodes.add(upNode);
             nodesInTree++;
         }
-        if (!inputState.isAtBottomBoundary() && input.getLastMove() != 'U'){
+        if (!inputState.isAtBottomBoundary()){
             State down = inputState.generateDownState();
-            Node downNode = new Node(input, down, 'D');
+            Node downNode = new Node(input, down);
             newNodes.add(downNode);
             nodesInTree++;
         }
