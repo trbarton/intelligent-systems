@@ -11,22 +11,26 @@ public class DepthFirstSearch {
     private int nodesVisited = 0;
     private int nodesInTree = 0;
 
+    private Node root;
+
     private  char[] goal = {' ', 'a', ' ', ' ',
                             ' ', 'b', ' ', ' ',
                             ' ', 'c', ' ', ' ',
                             ' ', 'X', ' ', ' '};
     private Node currentNode;
-
     private Stack<Node> expandedUnvistedNodes = new Stack<>();
-
     private ArrayList<Node> solution = new ArrayList<>();
 
+    public void setRoot(Node root) {
+        this.root = root;
+    }
 
     private void clearStack() {
         expandedUnvistedNodes.clear();
     }
 
     public void search(){
+        expandedUnvistedNodes.push(root);
         while(true){
             currentNode = expandedUnvistedNodes.pop();
             nodesVisited++;
@@ -37,22 +41,23 @@ public class DepthFirstSearch {
             }else{
                 expandNode(currentNode);
             }
-            //System.out.println("Nodes Visited: " + nodesVisited + " Nodes In Tree: " + nodesInTree);
         }
     }
 
     public void printSolution(Node goalNode){
         Node current = goalNode;
-        while(!current.getParent().isRoot()){
+        while(!current.isRoot()){
             solution.add(current);
             current = current.getParent();
         }
+        solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
             n.getPuzzleState().printState();
             System.out.println("\n");
         }
         System.out.println("Nodes Visited: " + nodesVisited);
+        System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
     public void expandNode(Node input){
@@ -97,7 +102,7 @@ public class DepthFirstSearch {
         Node root = new Node(startState,true);
         DepthFirstSearch dfs = new DepthFirstSearch();
         dfs.clearStack();
-        dfs.expandedUnvistedNodes.push(root);
+        dfs.setRoot(root);
         dfs.search();
 
     }

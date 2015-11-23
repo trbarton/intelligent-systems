@@ -8,8 +8,7 @@ import java.util.Stack;
  */
 public class IterativeDeepeningSearch {
 
-    private int nodesVisited = 1;
-    private int nodesInTree = 1;
+    private int expandedNodes = 0;
 
     public void setRoot(Node root) {
         this.root = root;
@@ -20,10 +19,10 @@ public class IterativeDeepeningSearch {
     private int maxDepth = 0;
     private boolean solutionFound = false;
 
-    private  char[] goal = {' ', 'a', ' ', ' ',
+    private  char[] goal = {' ', ' ', ' ', ' ',
+            ' ', 'a', ' ', ' ',
             ' ', 'b', ' ', ' ',
-            ' ', 'c', ' ', ' ',
-            ' ', 'X', ' ', ' '};
+            ' ', 'c', ' ', 'X'};
 
     private Node currentNode;
 
@@ -38,18 +37,23 @@ public class IterativeDeepeningSearch {
 
     public void search(){
         expandedUnvistedNodes.push(root);
-        while(true){
+        while(!solutionFound){
             currentNode = expandedUnvistedNodes.pop();
-            nodesVisited++;
+            //currentNode.getPuzzleState().printState();
+            //System.out.println("\n");
+
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
-                currentNode.getPuzzleState().printState();
+                //currentNode.getPuzzleState().printState();
                 printSolution(currentNode);
                 solutionFound = true;
                 return;
             }else if (currentNode.getDepth() < maxDepth){
                 expandNode(currentNode);
+                expandedNodes++;
             }
             if(expandedUnvistedNodes.isEmpty() && !solutionFound){
+                System.out.println("Depth: " + maxDepth + " Nodes Expanded: " + expandedNodes);
+
                 maxDepth = maxDepth + 1;
                 search();
             }
@@ -58,16 +62,18 @@ public class IterativeDeepeningSearch {
 
     public void printSolution(Node goalNode){
         Node current = goalNode;
-        while(!current.getParent().isRoot()){
+        while(!current.isRoot()){
             solution.add(current);
             current = current.getParent();
         }
+        solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
             n.getPuzzleState().printState();
             System.out.println("\n");
         }
-        System.out.println("Nodes Visited: " + nodesVisited);
+        System.out.println("Nodes Expanded: " + expandedNodes);
+        //System.out.println("Nodes Seen: " + nodesInTree);
         System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
@@ -78,27 +84,22 @@ public class IterativeDeepeningSearch {
             State left = inputState.generateLeftState();
             Node leftNode = new Node(input,left, 'L');
             newNodes.add(leftNode);
-            nodesInTree++;
         }
         if (!inputState.isAtRightBoundary() && input.getLastMove() != 'L'){
             State right = inputState.generateRightState();
             Node rightNode = new Node(input, right, 'R');
             newNodes.add(rightNode);
-            nodesInTree++;
         }
         if (!inputState.isAtTopBoundary() && input.getLastMove() != 'D'){
             State up = inputState.generateUpState();
             Node upNode = new Node(input, up, 'U');
             newNodes.add(upNode);
-            nodesInTree++;
         }
         if (!inputState.isAtBottomBoundary() && input.getLastMove() != 'U'){
             State down = inputState.generateDownState();
             Node downNode = new Node(input, down, 'D');
             newNodes.add(downNode);
-            nodesInTree++;
         }
-        //Collections.shuffle(newNodes);
         for (Node current: newNodes) {
             expandedUnvistedNodes.push(current);
         }
@@ -112,7 +113,6 @@ public class IterativeDeepeningSearch {
         State startState = new State(start, 15);
         IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
         ids.setRoot(new Node(startState,true));
-        //ids.expandedUnvistedNodes.push(root);
         ids.search();
 
     }

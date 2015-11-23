@@ -1,9 +1,9 @@
 import java.util.*;
 
 /**
- * Created by tombarton on 16/11/2015.
+ * Created by tombarton on 23/11/2015.
  */
-public class BreadthFirstSearch {
+public class AStarSearch {
 
     private int expandedNodes;
 
@@ -14,11 +14,11 @@ public class BreadthFirstSearch {
             ' ', 'b', ' ', ' ',
             ' ', 'c', ' ', 'X'};
 
-    private LinkedList<Node> nodeQueue = new LinkedList<>();
+    private PriorityQueue<Node> nodePriorityQueue = new PriorityQueue<>();
 
     public void search(){
         while(true){
-            currentNode = nodeQueue.remove();
+            currentNode = nodePriorityQueue.remove();
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
                 currentNode.getPuzzleState().printState();
                 System.out.println("Depth: " + currentNode.getDepth() + " Nodes Expanded: " + expandedNodes);
@@ -58,23 +58,7 @@ public class BreadthFirstSearch {
             newNodes.add(downNode);
         }
         for (Node current: newNodes) {
-            nodeQueue.add(current);
+            nodePriorityQueue.add(current);
         }
     }
-
-
-
-    public static void main(String[] args) {
-        char[] start = {' ', ' ', ' ', ' ',
-                ' ', ' ', ' ', ' ',
-                ' ', ' ', ' ', ' ',
-                'a', 'b', 'c', 'X'};
-        State startState = new State(start, 15);
-        Node root = new Node(startState,true);
-        BreadthFirstSearch bfs = new BreadthFirstSearch();
-        bfs.nodeQueue.add(root);
-        bfs.search();
-    }
-
-
 }
