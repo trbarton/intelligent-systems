@@ -9,16 +9,16 @@ import java.util.Stack;
 public class DepthFirstSearch {
 
     private int nodesVisited = 0;
-    private int nodesInTree = 0;
 
     private Node root;
+    private Node currentNode;
 
     private  char[] goal = {' ', ' ', ' ', ' ',
                             ' ', 'a', ' ', ' ',
                             ' ', 'b', ' ', ' ',
                             ' ', 'c', ' ', 'X'};
-    private Node currentNode;
-    private Stack<Node> expandedUnvistedNodes = new Stack<>();
+
+    private Stack<Node> nodeStack = new Stack<>();
     private ArrayList<Node> solution = new ArrayList<>();
 
     public void setRoot(Node root) {
@@ -26,16 +26,18 @@ public class DepthFirstSearch {
     }
 
     private void clearStack() {
-        expandedUnvistedNodes.clear();
+        nodeStack.clear();
     }
 
+    //DFS makes use of a LIFO stack to store nodes that have been discovered but not expanded
+    //Search runs an infinite loop which pops an element off of the stack and check if it is the goal and prints
+    // the solution else expands the node
     public void search(){
-        expandedUnvistedNodes.push(root);
+        nodeStack.push(root);
         while(true){
-            currentNode = expandedUnvistedNodes.pop();
+            currentNode = nodeStack.pop();
             nodesVisited++;
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
-                currentNode.getPuzzleState().printState();
                 printSolution(currentNode);
                 return;
             }else{
@@ -44,6 +46,9 @@ public class DepthFirstSearch {
         }
     }
 
+    //Print Solution uses the parent reference of each node to trace from the goal back the
+    //root. This is reversed and printed out. The Depth of the solution and nodes expanded is also
+    //printed
     public void printSolution(Node goalNode){
         Node current = goalNode;
         while(!current.isRoot()){
@@ -60,6 +65,9 @@ public class DepthFirstSearch {
         System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
+    //Expand Node takes an input node and where possible calculates all possible successor nodes.
+    //These successor nodes are added to an arraylist shuffled and then added to the stack. The
+    //randomisation prevents dfs getting into an infinite loop of moves.
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
@@ -67,29 +75,25 @@ public class DepthFirstSearch {
             State left = inputState.generateLeftState();
             Node leftNode = new Node(input,left);
             newNodes.add(leftNode);
-            nodesInTree++;
         }
         if (!inputState.isAtRightBoundary()){
             State right = inputState.generateRightState();
             Node rightNode = new Node(input, right);
             newNodes.add(rightNode);
-            nodesInTree++;
         }
         if (!inputState.isAtTopBoundary()){
             State up = inputState.generateUpState();
             Node upNode = new Node(input, up);
             newNodes.add(upNode);
-            nodesInTree++;
         }
         if (!inputState.isAtBottomBoundary()){
             State down = inputState.generateDownState();
             Node downNode = new Node(input, down);
             newNodes.add(downNode);
-            nodesInTree++;
         }
         Collections.shuffle(newNodes);
         for (Node current: newNodes) {
-            expandedUnvistedNodes.push(current);
+            nodeStack.push(current);
         }
     }
 

@@ -9,11 +9,7 @@ import java.util.Stack;
 public class IterativeDeepeningSearch {
 
     private int expandedNodes = 0;
-
-
-
     private Node root;
-
     private int maxDepth = 0;
     private boolean solutionFound = false;
 
@@ -23,28 +19,23 @@ public class IterativeDeepeningSearch {
                             ' ', 'c', ' ', 'X'};
 
     private Node currentNode;
-
-    private Stack<Node> expandedUnvistedNodes = new Stack<>();
-
+    private Stack<Node> nodeStack = new Stack<>();
     private ArrayList<Node> solution = new ArrayList<>();
 
     public void setRoot(Node root) {
         this.root = root;
     }
 
-    private void clearStack() {
-        expandedUnvistedNodes.clear();
-    }
 
+    //IDS uses the same underlying functionality of DFS. Except IDS is limited by a maximum depth.
+    //Search starts with depth 0 and conducts DFS. If a solution is found then the solution is printed out
+    //else the node is expanded. If the stack becomes empty and a solution isn't found then search starts again
+    //with a maximum depth of one greater.
     public void search(){
-        expandedUnvistedNodes.push(root);
+        nodeStack.push(root);
         while(!solutionFound){
-            currentNode = expandedUnvistedNodes.pop();
-            //currentNode.getPuzzleState().printState();
-            //System.out.println("\n");
-
+            currentNode = nodeStack.pop();
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
-                //currentNode.getPuzzleState().printState();
                 printSolution(currentNode);
                 solutionFound = true;
                 return;
@@ -52,15 +43,17 @@ public class IterativeDeepeningSearch {
                 expandNode(currentNode);
                 expandedNodes++;
             }
-            if(expandedUnvistedNodes.isEmpty() && !solutionFound){
+            if(nodeStack.isEmpty() && !solutionFound){
                 System.out.println("Depth: " + maxDepth + " Nodes Expanded: " + expandedNodes);
-
                 maxDepth = maxDepth + 1;
                 search();
             }
         }
     }
 
+    //Print Solution uses the parent reference of each node to trace from the goal back the
+    //root. This is reversed and printed out. The Depth of the solution and nodes expanded is also
+    //printed
     public void printSolution(Node goalNode){
         Node current = goalNode;
         while(!current.isRoot()){
@@ -74,10 +67,12 @@ public class IterativeDeepeningSearch {
             System.out.println("\n");
         }
         System.out.println("Nodes Expanded: " + expandedNodes);
-        //System.out.println("Nodes Seen: " + nodesInTree);
         System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
+    //Expand Node takes an input node and if possible produces a new node for each possible node
+    //These nodes are added to an ArrayList and then onto the queue. The ArrayList allows the order
+    //to be randomised.
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
@@ -102,7 +97,7 @@ public class IterativeDeepeningSearch {
             newNodes.add(downNode);
         }
         for (Node current: newNodes) {
-            expandedUnvistedNodes.push(current);
+            nodeStack.push(current);
         }
     }
 

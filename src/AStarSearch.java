@@ -6,9 +6,7 @@ import java.util.*;
 public class AStarSearch {
 
     private int expandedNodes;
-
     private Node currentNode;
-
     private Node root;
 
     private  char[] goal = {' ', ' ', ' ', ' ',
@@ -17,7 +15,6 @@ public class AStarSearch {
                             ' ', 'c', ' ', 'X'};
 
     private PriorityQueue<Node> nodePriorityQueue = new PriorityQueue<>();
-
     private ArrayList<Node> solution = new ArrayList<>();
 
     public void setRoot(Node root) {
@@ -25,7 +22,10 @@ public class AStarSearch {
     }
 
     public void search(){
+        //adds root to queue
         nodePriorityQueue.add(root);
+
+        //Infinite loop takes the first element off of the queue. Checks if it is the goal else expands the node
         while(true){
             currentNode = nodePriorityQueue.poll();
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
@@ -39,6 +39,9 @@ public class AStarSearch {
         }
     }
 
+    //Print Solution uses the parent reference of each node to trace from the goal back the
+    //root. This is reversed and printed out. The Depth of the solution and nodes expanded is also
+    //printed
     public void printSolution(Node goalNode){
         Node current = goalNode;
         while(!current.isRoot()){
@@ -52,10 +55,12 @@ public class AStarSearch {
             System.out.println("\n");
         }
         System.out.println("Nodes Expanded: " + expandedNodes);
-        //System.out.println("Nodes Seen: " + nodesInTree);
         System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
+    //Expand Node takes an input node and if possible produces a new node for each possible node
+    //These nodes are added to an ArrayList and then onto the queue. The ArrayList allows the order
+    //to be randomised.
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();

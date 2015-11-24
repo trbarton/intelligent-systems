@@ -16,9 +16,11 @@ public class State {
     private boolean atTopBoundary = false;
     private boolean atBottomBoundary = false;
 
+    //Lists contain index positions of all positions at left or right boundary
     private ArrayList<Integer> leftBoundary;
     private ArrayList<Integer> rightBoundary;
 
+    //Constructor for the first state calculates L/R boundaries
     public State(char[] puzzle, int agentIndex){
         puzzleArray = puzzle;
         this.agentIndex = agentIndex;
@@ -27,6 +29,7 @@ public class State {
         atBoundaries();
     }
 
+    //Constructor given reference to L/R boundaries to prevent use of extra memory
     public State(char[] puzzle, int agentIndex, ArrayList<Integer> left, ArrayList<Integer> right){
         puzzleArray = puzzle;
         this.agentIndex = agentIndex;
@@ -34,10 +37,6 @@ public class State {
         leftBoundary = left;
         rightBoundary = right;
         atBoundaries();
-    }
-
-    public int getNoOfElements() {
-        return noOfElements;
     }
 
     public int getPuzzleSize() {
@@ -49,6 +48,7 @@ public class State {
         puzzleSize = (int) Math.sqrt(noOfElements);
     }
 
+    //Uses size of puzzle to work out which indexes are on the L/R boundary
     public void calculateLRBoundaries(){
         leftBoundary = new ArrayList<>();
         rightBoundary = new ArrayList<>();
@@ -58,6 +58,7 @@ public class State {
         }
     }
 
+    //Sets booleans according to which boundaries the agent is at
     public void atBoundaries(){
         if(agentIndex < puzzleSize){
             atTopBoundary = true;
@@ -75,23 +76,20 @@ public class State {
     public char[] getPuzzleArray() {
         return puzzleArray;
     }
-
     public boolean isAtLeftBoundary() {
         return atLeftBoundary;
     }
-
     public boolean isAtRightBoundary() {
         return atRightBoundary;
     }
-
     public boolean isAtTopBoundary() {
         return atTopBoundary;
     }
-
     public boolean isAtBottomBoundary() {
         return atBottomBoundary;
     }
 
+    //Creates the successor state for each move
     public State generateLeftState(){
         char[] leftState = puzzleArray.clone();
         leftState[agentIndex] = leftState[agentIndex-1];
@@ -120,6 +118,7 @@ public class State {
         return new State(downState,agentIndex+puzzleSize,leftBoundary,rightBoundary);
     }
 
+    //Prints the state of the Puzzle in a readable form
     public void printState(){
         for(int i=0; i<puzzleArray.length; i++){
             if(i % 4 == 0){
