@@ -36,6 +36,14 @@ public class State {
         atBoundaries();
     }
 
+    public int getNoOfElements() {
+        return noOfElements;
+    }
+
+    public int getPuzzleSize() {
+        return puzzleSize;
+    }
+
     public void puzzleSize(){
         noOfElements = puzzleArray.length;
         puzzleSize = (int) Math.sqrt(noOfElements);

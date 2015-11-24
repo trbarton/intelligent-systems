@@ -13,10 +13,10 @@ public class DepthFirstSearch {
 
     private Node root;
 
-    private  char[] goal = {' ', 'a', ' ', ' ',
+    private  char[] goal = {' ', ' ', ' ', ' ',
+                            ' ', 'a', ' ', ' ',
                             ' ', 'b', ' ', ' ',
-                            ' ', 'c', ' ', ' ',
-                            ' ', 'X', ' ', ' '};
+                            ' ', 'c', ' ', 'X'};
     private Node currentNode;
     private Stack<Node> expandedUnvistedNodes = new Stack<>();
     private ArrayList<Node> solution = new ArrayList<>();

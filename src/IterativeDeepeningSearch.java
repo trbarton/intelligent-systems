@@ -10,9 +10,7 @@ public class IterativeDeepeningSearch {
 
     private int expandedNodes = 0;
 
-    public void setRoot(Node root) {
-        this.root = root;
-    }
+
 
     private Node root;
 
@@ -30,6 +28,9 @@ public class IterativeDeepeningSearch {
 
     private ArrayList<Node> solution = new ArrayList<>();
 
+    public void setRoot(Node root) {
+        this.root = root;
+    }
 
     private void clearStack() {
         expandedUnvistedNodes.clear();
