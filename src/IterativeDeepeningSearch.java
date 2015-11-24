@@ -44,7 +44,7 @@ public class IterativeDeepeningSearch {
                 expandedNodes++;
             }
             if(nodeStack.isEmpty() && !solutionFound){
-                System.out.println("Depth: " + maxDepth + " Nodes Expanded: " + expandedNodes);
+                //System.out.println("Depth: " + maxDepth + " Nodes Expanded: " + expandedNodes);
                 maxDepth = maxDepth + 1;
                 search();
             }
@@ -63,8 +63,9 @@ public class IterativeDeepeningSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
-            n.getPuzzleState().printState();
-            System.out.println("\n");
+            //System.out.println("Depth: " + n.getDepth());
+            //n.getPuzzleState().printState();
+            //System.out.println("\n");
         }
         System.out.println("Nodes Expanded: " + expandedNodes);
         System.out.println("Node Depth: " + goalNode.getDepth());
@@ -105,8 +106,8 @@ public class IterativeDeepeningSearch {
         char[] start = {' ', ' ', ' ', ' ',
                 ' ', ' ', ' ', ' ',
                 ' ', ' ', ' ', ' ',
-                'a', 'b', 'c', 'X'};
-        State startState = new State(start, 15);
+                'X', 'a', 'b', 'c'};
+        State startState = new State(start, 12);
         IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
         ids.setRoot(new Node(startState,true));
         ids.search();

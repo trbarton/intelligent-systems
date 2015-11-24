@@ -51,8 +51,8 @@ public class AStarSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
-            n.getPuzzleState().printState();
-            System.out.println("\n");
+            //n.getPuzzleState().printState();
+            //System.out.println("\n");
         }
         System.out.println("Nodes Expanded: " + expandedNodes);
         System.out.println("Node Depth: " + goalNode.getDepth());
@@ -95,10 +95,10 @@ public class AStarSearch {
 
     public static void main(String[] args) {
         char[] start = {' ', ' ', ' ', ' ',
-                        ' ', ' ', ' ', ' ',
-                        ' ', ' ', ' ', ' ',
-                        'a', 'b', 'c', 'X'};
-        State startState = new State(start, 15);
+                ' ', ' ', ' ', ' ',
+                ' ', ' ', ' ', ' ',
+                'X', 'a', 'b', 'c'};
+        State startState = new State(start, 12);
         AStarSearch as = new AStarSearch();
         as.setRoot(new Node(startState,true));
         as.search();

@@ -8,7 +8,7 @@ import java.util.Stack;
  */
 public class DepthFirstSearch {
 
-    private int nodesVisited = 0;
+    private int nodesExpanded = 0;
 
     private Node root;
     private Node currentNode;
@@ -36,12 +36,12 @@ public class DepthFirstSearch {
         nodeStack.push(root);
         while(true){
             currentNode = nodeStack.pop();
-            nodesVisited++;
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
                 printSolution(currentNode);
                 return;
             }else{
                 expandNode(currentNode);
+                nodesExpanded++;
             }
         }
     }
@@ -58,10 +58,10 @@ public class DepthFirstSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
-            n.getPuzzleState().printState();
-            System.out.println("\n");
+            //n.getPuzzleState().printState();
+            //System.out.println("\n");
         }
-        System.out.println("Nodes Visited: " + nodesVisited);
+        System.out.println("Nodes Expanded: " + nodesExpanded);
         System.out.println("Node Depth: " + goalNode.getDepth());
     }
 
@@ -99,10 +99,10 @@ public class DepthFirstSearch {
 
     public static void main(String[] args) {
         char[] start = {' ', ' ', ' ', ' ',
-                        ' ', ' ', ' ', ' ',
-                        ' ', ' ', ' ', ' ',
-                        'a', 'b', 'c', 'X'};
-        State startState = new State(start, 15);
+                ' ', ' ', ' ', ' ',
+                ' ', ' ', ' ', ' ',
+                'X', 'a', 'b', 'c'};
+        State startState = new State(start, 12);
         Node root = new Node(startState,true);
         DepthFirstSearch dfs = new DepthFirstSearch();
         dfs.clearStack();

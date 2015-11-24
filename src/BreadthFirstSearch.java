@@ -7,6 +7,7 @@ public class BreadthFirstSearch {
 
     private int expandedNodes = 0;
     private Node currentNode;
+    private Node root;
 
     private  char[] goal = {' ', ' ', ' ', ' ',
                             ' ', 'a', ' ', ' ',
@@ -15,10 +16,15 @@ public class BreadthFirstSearch {
 
     private LinkedList<Node> nodeQueue = new LinkedList<>();
 
+    public void setRoot(Node root) {
+        this.root = root;
+    }
+
     //BFS uses a FIFO queue. An infinite loop takes the first element off the queue checks if it is the solution
     //and returns printing the depth of solution and nodes expanded else expands the node. Unlike other search techniques
     //the parent reference has been removed to save memory and hopefully give an insight into the number of nodes expanded.
     public void search(){
+        nodeQueue.add(root);
         while(true){
             currentNode = nodeQueue.poll();
             if(Arrays.equals(currentNode.getPuzzleState().getPuzzleArray(), goal)){
@@ -34,30 +40,28 @@ public class BreadthFirstSearch {
         }
     }
 
-    //Expand Node in BFS uses a depth incrementer as there is no reference to the parent to get the previous depth
-    //The order they are added to the queue is not random.
+
     public void expandNode(Node input){
         State inputState = input.getPuzzleState();
         ArrayList<Node> newNodes = new ArrayList<>();
-        int depthIncrementer = input.getDepth() + 1;
         if (!inputState.isAtLeftBoundary()){
             State left = inputState.generateLeftState();
-            Node leftNode = new Node(left, depthIncrementer);
+            Node leftNode = new Node(input,left);
             newNodes.add(leftNode);
         }
         if (!inputState.isAtRightBoundary()){
             State right = inputState.generateRightState();
-            Node rightNode = new Node(right, depthIncrementer);
+            Node rightNode = new Node(input, right);
             newNodes.add(rightNode);
         }
         if (!inputState.isAtTopBoundary()){
             State up = inputState.generateUpState();
-            Node upNode = new Node(up, depthIncrementer);
+            Node upNode = new Node(input, up);
             newNodes.add(upNode);
         }
         if (!inputState.isAtBottomBoundary()){
             State down = inputState.generateDownState();
-            Node downNode = new Node(down, depthIncrementer);
+            Node downNode = new Node(input, down);
             newNodes.add(downNode);
         }
         for (Node current: newNodes) {
