@@ -51,7 +51,7 @@ public class AStarSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
-            System.out.println("Move " + n.getDepth() + ":");
+            System.out.println("Move " + n.getDepth());
             n.getPuzzleState().printState();
             System.out.println("\n");
         }

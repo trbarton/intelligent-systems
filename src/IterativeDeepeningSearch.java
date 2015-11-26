@@ -63,6 +63,7 @@ public class IterativeDeepeningSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
+            System.out.println("Move " + n.getDepth());
             n.getPuzzleState().printState();
             System.out.println("\n");
         }
