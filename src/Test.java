@@ -8,12 +8,35 @@ public class Test {
     IterativeDeepeningSearch ids;
     AStarSearch as;
 
-    char[] start = {' ', ' ', ' ', ' ',
-            ' ', 'a', ' ', ' ',
-            ' ', 'b', ' ', ' ',
-            ' ', 'c', 'X', ' '};
-    State startState = new State(start, 14);
-    Node startNode = new Node(startState, true);
+    private char[] start;
+    State startState;
+    int agentPos = 15;
+
+    Node startNode;
+
+    public void setStart(char[] start) {
+        this.start = start;
+    }
+
+    public void setAgentPos(int agentPos) {
+        this.agentPos = agentPos;
+    }
+
+    public void setStartNode(Node startNode) {
+        this.startNode = startNode;
+    }
+
+    public Test(char[] start, int agentIndex){
+        setStart(start);
+        setAgentPos(agentIndex);
+        startState = new State(this.start, agentPos);
+        setStartState(startState);
+        setStartNode(new Node(startState, true));
+    }
+
+    public void setStartState(State startState) {
+        this.startState = startState;
+    }
 
     public void testDFS(){
         System.out.println("TESTING DFS");
@@ -44,11 +67,18 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        Test tester = new Test();
-        tester.testDFS();
-        tester.testDFS();
+        //Make sure the agent index position is correct or the puzzle will not solve
+        char[] startArray = {' ', ' ', ' ', ' ',
+                             ' ', ' ', ' ', ' ',
+                             ' ', ' ', ' ', ' ',
+                             'a', 'b', 'c', 'X'};
+        int agentIndexPosition = 15;
+
+        Test tester = new Test(startArray,agentIndexPosition);
+        tester.setStart(startArray);
         tester.testDFS();
         tester.testIDS();
         tester.testAS();
+        tester.testBFS();
     }
 }

@@ -58,8 +58,8 @@ public class DepthFirstSearch {
         solution.add(root);
         Collections.reverse(solution);
         for(Node n : solution){
-            //n.getPuzzleState().printState();
-            //System.out.println("\n");
+            n.getPuzzleState().printState();
+            System.out.println("\n");
         }
         System.out.println("Nodes Expanded: " + nodesExpanded);
         System.out.println("Node Depth: " + goalNode.getDepth());
@@ -95,20 +95,6 @@ public class DepthFirstSearch {
         for (Node current: newNodes) {
             nodeStack.push(current);
         }
-    }
-
-    public static void main(String[] args) {
-        char[] start = {' ', ' ', ' ', ' ',
-                ' ', ' ', ' ', ' ',
-                ' ', ' ', ' ', ' ',
-                'X', 'a', 'b', 'c'};
-        State startState = new State(start, 12);
-        Node root = new Node(startState,true);
-        DepthFirstSearch dfs = new DepthFirstSearch();
-        dfs.clearStack();
-        dfs.setRoot(root);
-        dfs.search();
-
     }
 
 }
